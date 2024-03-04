@@ -21,3 +21,7 @@ jobs:
         run: mvn -B package --file pom.xml
       - name: Report test results
         uses: dorny/test-reporter@v1
+        with:
+          name: JUnit tests
+          path: target/surefire-reports/*.xml
+          format: junit
