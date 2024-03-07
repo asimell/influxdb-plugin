@@ -25,3 +25,18 @@ jobs:
           name: JUnit tests
           path: target/surefire-reports/*.xml
           reporter: java-junit
+
+  report:
+    name: Send Data
+    runs-on: ubuntu-latest
+    steps:
+      - name: Write data to InfluxDB
+        uses: asimell/influxdb-write-action@main
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          workflow_run_id: ${{ github.run_id }}
+          influxdb_url: "ec2-16-171-13-190.eu-north-1.compute.amazonaws.com:8087"
+          influxdb_bucket: my-bucket
+          influxdb_org: awesome-org
+          influxdb_token: ${{ secrets.influxdb_token }}
